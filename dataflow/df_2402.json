@@ -14,7 +14,7 @@
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmultiLineRow: true,\n\twildcardPaths:[('20*.csv')]) ~> source2402"
+			"script": "source(output(\n\t\tDate as string,\n\t\tRate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmultiLineRow: true,\n\twildcardPaths:[('20*.csv')]) ~> source2402"
 		}
 	}
 }
