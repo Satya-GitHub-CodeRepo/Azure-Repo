@@ -12,9 +12,24 @@
 					"name": "source2402"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\tDate as string,\n\t\tRate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmultiLineRow: true,\n\twildcardPaths:[('20*.csv')]) ~> source2402"
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "AzureBlobStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sink2402"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"script": "source(output(\n\t\tDate as string,\n\t\tRate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmultiLineRow: true,\n\twildcardPaths:[('20*.csv')]) ~> source2402\nsource2402 derive(NewDate = toString(currentTimestamp(), 'yyyy-MM-dd')) ~> DerivedColumn1\nDerivedColumn1 alterRow(deleteIf(Date=='1/2/2000')) ~> AlterRow1\nsource2402 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'newcontainer',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2402"
 		}
 	}
 }

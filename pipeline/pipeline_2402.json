@@ -1,0 +1,46 @@
+{
+	"name": "pipeline_2402",
+	"properties": {
+		"activities": [
+			{
+				"name": "dataflow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_2402",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source2402": {
+								"p_containername": {
+									"value": "@pipeline().parameters.p_containername",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"parameters": {
+			"p_containername": {
+				"type": "string",
+				"defaultValue": "azdlc1"
+			}
+		},
+		"annotations": []
+	}
+}
