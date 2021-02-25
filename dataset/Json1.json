@@ -9,7 +9,11 @@
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation"
+				"type": "AzureBlobStorageLocation",
+				"container": {
+					"value": "newcontainer",
+					"type": "Expression"
+				}
 			}
 		},
 		"schema": {}
